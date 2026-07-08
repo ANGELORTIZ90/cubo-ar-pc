@@ -8,21 +8,29 @@ Ensamblaje-PC-3D).
 
 | Archivo | Función |
 |---|---|
-| `plantilla.html` | Plantilla imprimible del cubo (abrir y Ctrl+P → PDF, escala 100%) |
+| `plantilla.html` | Plantilla imprimible del cubo 1 (abrir y Ctrl+P → PDF, escala 100%) |
+| `plantilla2.html` | Plantilla imprimible del cubo 2 (incluye QR del visor y cara de título) |
 | `index.html` | Visor AR web (A-Frame + AR.js, marcadores barcode 3x3) |
-| `modelos/` | 6 modelos GLB (placa base, CPU, disipador, RAM, GPU, fuente) |
-| `marcadores/` | Marcadores barcode 0-5 (colección oficial AR.js) |
+| `modelos/` | 10 modelos GLB de componentes de PC |
+| `marcadores/` | Marcadores barcode 0-9 (colección oficial AR.js) |
+| `qr-visor.png` | QR con la URL del visor publicado |
 
-## Caras del cubo
+## Caras de los cubos
 
-| Marcador | Componente |
-|---|---|
-| 0 | Placa base |
-| 1 | Procesador (CPU) |
-| 2 | Disipador de CPU |
-| 3 | Memoria RAM |
-| 4 | Tarjeta gráfica (GPU) |
-| 5 | Fuente de alimentación |
+| Marcador | Componente | Cubo |
+|---|---|---|
+| 0 | Placa base | 1 |
+| 1 | Procesador (CPU) | 1 |
+| 2 | Disipador de CPU | 1 |
+| 3 | Memoria RAM | 1 |
+| 4 | Tarjeta gráfica (GPU) | 1 |
+| 5 | Fuente de alimentación | 1 |
+| 6 | Caja / Torre | 2 |
+| 7 | Almacenamiento (SSD / HDD) | 2 |
+| 8 | SSD NVMe (M.2) | 2 |
+| 9 | Ventilador de caja | 2 |
+
+El cubo 2 usa las 2 caras libres para el QR del visor y el título.
 
 ## Probar en el portátil (webcam)
 

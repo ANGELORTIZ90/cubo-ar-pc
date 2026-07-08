@@ -52,6 +52,10 @@
       <a-asset-item id="m-ram"       src="modelos/ram.glb"></a-asset-item>
       <a-asset-item id="m-gpu"       src="modelos/gpu.glb"></a-asset-item>
       <a-asset-item id="m-fuente"    src="modelos/fuente.glb"></a-asset-item>
+      <a-asset-item id="m-caja"      src="modelos/caja.glb"></a-asset-item>
+      <a-asset-item id="m-almacen"   src="modelos/almacenamiento.glb"></a-asset-item>
+      <a-asset-item id="m-nvme"      src="modelos/nvme.glb"></a-asset-item>
+      <a-asset-item id="m-ventilador" src="modelos/ventilador.glb"></a-asset-item>
     </a-assets>
 
     <a-entity light="type: ambient; intensity: 0.9"></a-entity>
@@ -85,6 +89,26 @@
     <a-marker type="barcode" value="5">
       <a-entity gltf-model="#m-fuente" ajustar></a-entity>
       <a-text value="Fuente (PSU)" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="6">
+      <a-entity gltf-model="#m-caja" ajustar></a-entity>
+      <a-text value="Caja / Torre" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="7">
+      <a-entity gltf-model="#m-almacen" ajustar></a-entity>
+      <a-text value="Almacenamiento (SSD / HDD)" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="8">
+      <a-entity gltf-model="#m-nvme" ajustar></a-entity>
+      <a-text value="SSD NVMe (M.2)" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="9">
+      <a-entity gltf-model="#m-ventilador" ajustar></a-entity>
+      <a-text value="Ventilador de caja" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
     </a-marker>
 
     <a-entity camera></a-entity>

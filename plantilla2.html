@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Plantilla Cubo AR 2 — Componentes de PC</title>
+  <style>
+    @page { size: A4 portrait; margin: 8mm; }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin: 0; }
+
+    .instrucciones { font-size: 11px; margin: 4mm 0; }
+    .instrucciones h1 { font-size: 15px; margin: 0 0 2mm; }
+    @media print { .no-imprimir { display: none; } }
+
+    /* Red del cubo: cruz vertical 3 columnas x 4 filas, caras de 60 mm */
+    .red {
+      display: grid;
+      grid-template-columns: repeat(3, 60mm);
+      grid-template-rows: repeat(4, 60mm);
+      margin: 10mm auto 0;
+      width: 180mm;
+    }
+    .cara {
+      border: 0.4mm solid #000;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+    }
+    .cara img { width: 42mm; height: 42mm; image-rendering: pixelated; }
+    .cara img.qr { image-rendering: auto; }
+    .cara .nombre {
+      font-size: 10px; font-weight: bold; margin-top: 1.5mm;
+      text-transform: uppercase; letter-spacing: .5px; text-align: center;
+    }
+    .titulo { text-align: center; }
+    .titulo .grande { font-size: 20px; font-weight: bold; line-height: 1.2; }
+    .titulo .peq { font-size: 11px; margin-top: 2mm; }
+
+    /* Posiciones en la cruz */
+    .arriba   { grid-column: 2; grid-row: 1; }
+    .izq      { grid-column: 1; grid-row: 2; }
+    .frente   { grid-column: 2; grid-row: 2; }
+    .der      { grid-column: 3; grid-row: 2; }
+    .abajo    { grid-column: 2; grid-row: 3; }
+    .atras    { grid-column: 2; grid-row: 4; }
+
+    /* Pestañas de pegado (trapecios grises, 10 mm) */
+    .p {
+      position: absolute;
+      background: #eee;
+      border: 0.3mm dashed #888;
+    }
+    .p-arriba { left: 6mm; right: 6mm; top: -10mm; height: 10mm;
+                clip-path: polygon(0 100%, 12% 0, 88% 0, 100% 100%); }
+    .p-abajo  { left: 6mm; right: 6mm; bottom: -10mm; height: 10mm;
+                clip-path: polygon(0 0, 12% 100%, 88% 100%, 100% 0); }
+    .p-izq    { top: 6mm; bottom: 6mm; left: -10mm; width: 10mm;
+                clip-path: polygon(100% 0, 0 12%, 0 88%, 100% 100%); }
+    .p-der    { top: 6mm; bottom: 6mm; right: -10mm; width: 10mm;
+                clip-path: polygon(0 0, 100% 12%, 100% 88%, 0 100%); }
+  </style>
+</head>
+<body>
+  <div class="instrucciones">
+    <h1>Cubo AR 2 — Componentes de PC &nbsp;·&nbsp; SMX</h1>
+    <b>Montaje:</b> 1) Imprimir a tamaño real (100%, sin ajustar a página). 2) Recortar por el borde exterior
+    incluyendo las pestañas grises. 3) Doblar por todas las líneas. 4) Pegar las pestañas por dentro.<br>
+    <b>Uso:</b> escanear el QR de la cara superior para abrir el visor AR y apuntar a las caras con marcador.
+    <span class="no-imprimir"><b>(Esta hoja se imprime desde el navegador: Ctrl+P → Guardar como PDF.)</b></span>
+  </div>
+
+  <div class="red">
+    <div class="cara arriba">
+      <img class="qr" src="qr-visor.png" alt="QR del visor AR">
+      <div class="nombre">Escanéame → visor AR</div>
+      <div class="p p-arriba"></div>
+    </div>
+    <div class="cara izq">
+      <img src="marcadores/marker-9.png" alt="Ventilador">
+      <div class="nombre">Ventilador de caja</div>
+      <div class="p p-arriba"></div>
+      <div class="p p-izq"></div>
+      <div class="p p-abajo"></div>
+    </div>
+    <div class="cara frente">
+      <img src="marcadores/marker-6.png" alt="Caja">
+      <div class="nombre">Caja / Torre</div>
+    </div>
+    <div class="cara der">
+      <img src="marcadores/marker-7.png" alt="Almacenamiento">
+      <div class="nombre">SSD / HDD</div>
+      <div class="p p-arriba"></div>
+      <div class="p p-der"></div>
+      <div class="p p-abajo"></div>
+    </div>
+    <div class="cara abajo titulo">
+      <div class="grande">CUBO AR<br>PC · SMX</div>
+      <div class="peq">Ensamblaje de equipos<br>MP01 — Montaje y mantenimiento</div>
+    </div>
+    <div class="cara atras">
+      <img src="marcadores/marker-8.png" alt="NVMe">
+      <div class="nombre">SSD NVMe (M.2)</div>
+    </div>
+  </div>
+</body>
+</html>
