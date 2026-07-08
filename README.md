@@ -10,6 +10,8 @@ Ensamblaje-PC-3D).
 |---|---|
 | `plantilla.html` | Plantilla imprimible del cubo 1 (abrir y Ctrl+P → PDF, escala 100%) |
 | `plantilla2.html` | Plantilla imprimible del cubo 2 (incluye QR del visor y cara de título) |
+| `plantilla-8cm.html` | Cubo 1 con caras de 8 cm, en 2 páginas A4 apaisadas (para webcams de portátil) |
+| `plantilla2-8cm.html` | Cubo 2 con caras de 8 cm, en 2 páginas A4 apaisadas |
 | `index.html` | Visor AR web (A-Frame + AR.js, marcadores barcode 3x3) |
 | `modelos/` | 10 modelos GLB de componentes de PC |
 | `marcadores/` | Marcadores barcode 0-9 (colección oficial AR.js) |

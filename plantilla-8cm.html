@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Plantilla Cubo AR 1 (8 cm) — Componentes de PC</title>
+  <style>
+    @page { size: A4 landscape; margin: 8mm; }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin: 0; }
+
+    .instrucciones { font-size: 11px; margin: 3mm 0; }
+    .instrucciones h1 { font-size: 15px; margin: 0 0 2mm; }
+    @media print { .no-imprimir { display: none; } }
+    .pagina { page-break-after: always; }
+
+    /* Página 1: cruz superior (arriba + izq/frente/der), caras de 80 mm */
+    .parte1 {
+      display: grid;
+      grid-template-columns: repeat(3, 80mm);
+      grid-template-rows: repeat(2, 80mm);
+      margin: 14mm auto 0;
+      width: 240mm;
+    }
+    /* Página 2: tira inferior (abajo + atrás) */
+    .parte2 {
+      display: grid;
+      grid-template-columns: 80mm;
+      grid-template-rows: repeat(2, 80mm);
+      margin: 16mm auto 0;
+      width: 80mm;
+    }
+    .cara {
+      border: 0.4mm solid #000;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+    }
+    .cara img { width: 56mm; height: 56mm; image-rendering: pixelated; }
+    .cara .nombre {
+      font-size: 12px; font-weight: bold; margin-top: 2mm;
+      text-transform: uppercase; letter-spacing: .5px; text-align: center;
+    }
+    .arriba { grid-column: 2; grid-row: 1; }
+    .izq    { grid-column: 1; grid-row: 2; }
+    .frente { grid-column: 2; grid-row: 2; }
+    .der    { grid-column: 3; grid-row: 2; }
+    .abajo  { grid-column: 1; grid-row: 1; }
+    .atras  { grid-column: 1; grid-row: 2; }
+
+    /* Pestañas de pegado (trapecios grises, 12 mm) */
+    .p { position: absolute; background: #eee; border: 0.3mm dashed #888; }
+    .p-arriba { left: 8mm; right: 8mm; top: -12mm; height: 12mm;
+                clip-path: polygon(0 100%, 12% 0, 88% 0, 100% 100%); }
+    .p-abajo  { left: 8mm; right: 8mm; bottom: -12mm; height: 12mm;
+                clip-path: polygon(0 0, 12% 100%, 88% 100%, 100% 0); }
+    .p-izq    { top: 8mm; bottom: 8mm; left: -12mm; width: 12mm;
+                clip-path: polygon(100% 0, 0 12%, 0 88%, 100% 100%); }
+    .p-der    { top: 8mm; bottom: 8mm; right: -12mm; width: 12mm;
+                clip-path: polygon(0 0, 100% 12%, 100% 88%, 0 100%); }
+    /* Pestaña de unión entre las dos partes (rayada) */
+    .p-union {
+      background: repeating-linear-gradient(45deg, #ddd 0, #ddd 2mm, #fff 2mm, #fff 4mm);
+    }
+    .p-union::after {
+      content: "UNIÓN"; position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: bold; color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="pagina">
+    <div class="instrucciones">
+      <h1>Cubo AR 1 — Componentes de PC (versión 8 cm) &nbsp;·&nbsp; Página 1 de 2</h1>
+      <b>Montaje:</b> 1) Imprimir las 2 páginas a tamaño real (100%). 2) Recortar ambas piezas con sus pestañas.
+      3) Pegar la pestaña rayada <b>UNIÓN</b> de la página 2 por debajo del borde inferior de la cara PLACA BASE.
+      4) Doblar por todas las líneas y pegar el resto de pestañas por dentro.
+      <span class="no-imprimir"><b>(Ctrl+P → Guardar como PDF, papel A4 horizontal.)</b></span>
+    </div>
+    <div class="parte1">
+      <div class="cara arriba">
+        <img src="marcadores/marker-4.png" alt="GPU">
+        <div class="nombre">Tarjeta gráfica</div>
+        <div class="p p-arriba"></div>
+      </div>
+      <div class="cara izq">
+        <img src="marcadores/marker-3.png" alt="RAM">
+        <div class="nombre">Memoria RAM</div>
+        <div class="p p-arriba"></div>
+        <div class="p p-izq"></div>
+        <div class="p p-abajo"></div>
+      </div>
+      <div class="cara frente">
+        <img src="marcadores/marker-0.png" alt="Placa base">
+        <div class="nombre">Placa base</div>
+      </div>
+      <div class="cara der">
+        <img src="marcadores/marker-1.png" alt="CPU">
+        <div class="nombre">Procesador</div>
+        <div class="p p-arriba"></div>
+        <div class="p p-der"></div>
+        <div class="p p-abajo"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina">
+    <div class="instrucciones">
+      <h1>Cubo AR 1 — Componentes de PC (versión 8 cm) &nbsp;·&nbsp; Página 2 de 2</h1>
+      La pestaña rayada <b>UNIÓN</b> se pega bajo la cara PLACA BASE de la página 1.
+    </div>
+    <div class="parte2">
+      <div class="cara abajo">
+        <img src="marcadores/marker-5.png" alt="Fuente">
+        <div class="nombre">Fuente PSU</div>
+        <div class="p p-arriba p-union"></div>
+      </div>
+      <div class="cara atras">
+        <img src="marcadores/marker-2.png" alt="Disipador">
+        <div class="nombre">Disipador</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
