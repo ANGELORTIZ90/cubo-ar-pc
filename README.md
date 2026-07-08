@@ -16,6 +16,8 @@ Ensamblaje-PC-3D).
 | `modelos/` | 10 modelos GLB de componentes de PC |
 | `marcadores/` | Marcadores barcode 0-9 (colección oficial AR.js) |
 | `qr-visor.png` | QR con la URL del visor publicado |
+| `cubo1-6cm.pdf` / `cubo2-6cm.pdf` | PDFs listos para imprimir (A4 vertical, 100%) |
+| `cubo1-8cm.pdf` / `cubo2-8cm.pdf` | PDFs listos para imprimir (A4 horizontal, 100%) |
 
 ## Caras de los cubos
 
