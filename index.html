@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cubo AR — Componentes de PC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
+  <style>
+    .aviso {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: rgba(0,0,0,.65); color: #fff; font-family: sans-serif;
+      font-size: 14px; text-align: center; padding: 6px;
+    }
+  </style>
+  <script>
+    // Escala cualquier GLB para que quepa sobre el marcador y lo centra
+    AFRAME.registerComponent('ajustar', {
+      schema: { tam: { default: 1.2 } },
+      init: function () {
+        this.el.addEventListener('model-loaded', () => {
+          const malla = this.el.getObject3D('mesh');
+          if (!malla) return;
+          const caja = new THREE.Box3().setFromObject(malla);
+          const dims = caja.getSize(new THREE.Vector3());
+          const mayor = Math.max(dims.x, dims.y, dims.z);
+          const s = this.data.tam / mayor;
+          this.el.object3D.scale.setScalar(s);
+          const centro = caja.getCenter(new THREE.Vector3());
+          this.el.object3D.position.set(
+            -centro.x * s,
+            -caja.min.y * s + 0.05,
+            -centro.z * s
+          );
+        });
+      }
+    });
+  </script>
+</head>
+<body style="margin:0; overflow:hidden">
+  <div class="aviso">Cubo AR — Componentes de PC · Apunte la cámara a una cara del cubo</div>
+
+  <a-scene embedded
+           arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;"
+           renderer="logarithmicDepthBuffer: true; colorManagement: true;"
+           vr-mode-ui="enabled: false">
+
+    <a-assets timeout="30000">
+      <a-asset-item id="m-placa"     src="modelos/placa_base.glb"></a-asset-item>
+      <a-asset-item id="m-cpu"       src="modelos/cpu.glb"></a-asset-item>
+      <a-asset-item id="m-disipador" src="modelos/disipador.glb"></a-asset-item>
+      <a-asset-item id="m-ram"       src="modelos/ram.glb"></a-asset-item>
+      <a-asset-item id="m-gpu"       src="modelos/gpu.glb"></a-asset-item>
+      <a-asset-item id="m-fuente"    src="modelos/fuente.glb"></a-asset-item>
+    </a-assets>
+
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
+
+    <a-marker type="barcode" value="0">
+      <a-entity gltf-model="#m-placa" ajustar></a-entity>
+      <a-text value="Placa base" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="1">
+      <a-entity gltf-model="#m-cpu" ajustar></a-entity>
+      <a-text value="Procesador (CPU)" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="2">
+      <a-entity gltf-model="#m-disipador" ajustar></a-entity>
+      <a-text value="Disipador de CPU" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="3">
+      <a-entity gltf-model="#m-ram" ajustar></a-entity>
+      <a-text value="Memoria RAM" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="4">
+      <a-entity gltf-model="#m-gpu" ajustar></a-entity>
+      <a-text value="Tarjeta grafica (GPU)" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="5">
+      <a-entity gltf-model="#m-fuente" ajustar></a-entity>
+      <a-text value="Fuente (PSU)" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>
