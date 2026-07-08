@@ -12,12 +12,14 @@ Ensamblaje-PC-3D).
 | `plantilla2.html` | Plantilla imprimible del cubo 2 (incluye QR del visor y cara de título) |
 | `plantilla-8cm.html` | Cubo 1 con caras de 8 cm, en 2 páginas A4 apaisadas (para webcams de portátil) |
 | `plantilla2-8cm.html` | Cubo 2 con caras de 8 cm, en 2 páginas A4 apaisadas |
+| `plantilla3.html` / `plantilla3-8cm.html` | Cubo 3: arquitectura del PC con diagramas animados |
 | `index.html` | Visor AR web (A-Frame + AR.js, marcadores barcode 3x3) |
 | `modelos/` | 10 modelos GLB de componentes de PC |
 | `marcadores/` | Marcadores barcode 0-9 (colección oficial AR.js) |
 | `qr-visor.png` | QR con la URL del visor publicado |
 | `cubo1-6cm.pdf` / `cubo2-6cm.pdf` | PDFs listos para imprimir (A4 vertical, 100%) |
 | `cubo1-8cm.pdf` / `cubo2-8cm.pdf` | PDFs listos para imprimir (A4 horizontal, 100%) |
+| `cubo3-6cm.pdf` / `cubo3-8cm.pdf` | PDFs del cubo 3 |
 
 ## Caras de los cubos
 
@@ -33,8 +35,12 @@ Ensamblaje-PC-3D).
 | 7 | Almacenamiento (SSD / HDD) | 2 |
 | 8 | SSD NVMe (M.2) | 2 |
 | 9 | Ventilador de caja | 2 |
+| 10 | Arquitectura clásica: puentes norte/sur (diagrama animado) | 3 |
+| 11 | SoC moderno: CPU + GPU + NPU (diagrama animado) | 3 |
 
 El cubo 2 usa las 2 caras libres para el QR del visor y el título.
+El cubo 3 lleva QR, título y 2 caras de teoría impresa; sus marcadores muestran
+diagramas 3D animados (partículas recorriendo los buses) en vez de modelos GLB.
 
 ## Probar en el portátil (webcam)
 
