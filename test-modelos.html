@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test modelos — Cubo AR</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script>
+    // Mismo componente que index.html: escala y centra cada GLB
+    AFRAME.registerComponent('ajustar', {
+      schema: { tam: { default: 1.2 } },
+      init: function () {
+        this.el.addEventListener('model-loaded', () => {
+          const malla = this.el.getObject3D('mesh');
+          if (!malla) return;
+          const caja = new THREE.Box3().setFromObject(malla);
+          const dims = caja.getSize(new THREE.Vector3());
+          const mayor = Math.max(dims.x, dims.y, dims.z);
+          const s = this.data.tam / mayor;
+          this.el.object3D.scale.setScalar(s);
+          const centro = caja.getCenter(new THREE.Vector3());
+          this.el.object3D.position.x += -centro.x * s;
+          this.el.object3D.position.y += -centro.y * s;
+          this.el.object3D.position.z += -centro.z * s;
+          console.log('[TEST] cargado: ' + this.el.dataset.nombre);
+        });
+        this.el.addEventListener('model-error', (e) => {
+          console.error('[TEST] ERROR en: ' + this.el.dataset.nombre);
+        });
+      }
+    });
+  </script>
+</head>
+<body style="margin:0">
+  <a-scene embedded style="width:100vw;height:100vh" background="color: #223" vr-mode-ui="enabled: false">
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
+
+    <!-- Fila superior -->
+    <a-entity gltf-model="url(modelos/placa_base.glb)" ajustar data-nombre="placa_base" position="-4 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="Placa base" position="-4 0.2 -4" align="center" color="#FFF" width="4"></a-text>
+    <a-entity gltf-model="url(modelos/cpu.glb)" ajustar data-nombre="cpu" position="-2 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="CPU" position="-2 0.2 -4" align="center" color="#FFF" width="4"></a-text>
+    <a-entity gltf-model="url(modelos/disipador.glb)" ajustar data-nombre="disipador" position="0 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="Disipador" position="0 0.2 -4" align="center" color="#FFF" width="4"></a-text>
+    <a-entity gltf-model="url(modelos/ram.glb)" ajustar data-nombre="ram" position="2 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="RAM" position="2 0.2 -4" align="center" color="#FFF" width="4"></a-text>
+    <a-entity gltf-model="url(modelos/gpu.glb)" ajustar data-nombre="gpu" position="4 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="GPU" position="4 0.2 -4" align="center" color="#FFF" width="4"></a-text>
+
+    <!-- Fila inferior -->
+    <a-entity gltf-model="url(modelos/fuente.glb)" ajustar data-nombre="fuente" position="-4 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="Fuente" position="-4 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
+    <a-entity gltf-model="url(modelos/caja.glb)" ajustar data-nombre="caja" position="-2 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="Caja" position="-2 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
+    <a-entity gltf-model="url(modelos/almacenamiento.glb)" ajustar data-nombre="almacenamiento" position="0 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="SSD 2.5" position="0 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
+    <a-entity gltf-model="url(modelos/nvme.glb)" ajustar data-nombre="nvme" position="2 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="NVMe" position="2 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
+    <a-entity gltf-model="url(modelos/ventilador.glb)" ajustar data-nombre="ventilador" position="4 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-text value="Ventilador" position="4 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
+
+    <a-entity camera="fov: 60" position="0 0 1.5"></a-entity>
+  </a-scene>
+</body>
+</html>
