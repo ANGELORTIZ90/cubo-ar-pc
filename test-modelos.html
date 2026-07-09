@@ -5,22 +5,27 @@
   <title>Test modelos — Cubo AR</title>
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script>
-    // Mismo componente que index.html: escala y centra cada GLB
+    // Version robusta del 'ajustar' de index.html para esta pagina de test:
+    // calcula la caja envolvente en el espacio LOCAL de la entidad (con la
+    // inversa de matrixWorld) para que el resultado no dependa de si el GLB
+    // termina de parsear antes o despues del primer frame. En index.html no
+    // hace falta porque las entidades estan en el origen del marcador.
     AFRAME.registerComponent('ajustar', {
       schema: { tam: { default: 1.2 } },
       init: function () {
         this.el.addEventListener('model-loaded', () => {
           const malla = this.el.getObject3D('mesh');
           if (!malla) return;
-          const caja = new THREE.Box3().setFromObject(malla);
+          const obj = this.el.object3D;
+          obj.updateWorldMatrix(true, true);
+          const inv = new THREE.Matrix4().copy(obj.matrixWorld).invert();
+          const caja = new THREE.Box3().setFromObject(malla).applyMatrix4(inv);
           const dims = caja.getSize(new THREE.Vector3());
           const mayor = Math.max(dims.x, dims.y, dims.z);
           const s = this.data.tam / mayor;
-          this.el.object3D.scale.setScalar(s);
+          obj.scale.setScalar(s);
           const centro = caja.getCenter(new THREE.Vector3());
-          this.el.object3D.position.x += -centro.x * s;
-          this.el.object3D.position.y += -centro.y * s;
-          this.el.object3D.position.z += -centro.z * s;
+          malla.position.sub(centro);
           console.log('[TEST] cargado: ' + this.el.dataset.nombre);
         });
         this.el.addEventListener('model-error', (e) => {
@@ -32,31 +37,46 @@
 </head>
 <body style="margin:0">
   <a-scene embedded style="width:100vw;height:100vh" background="color: #223" vr-mode-ui="enabled: false">
+    <a-assets timeout="30000">
+      <!-- Precarga como en index.html: evita que 'ajustar' calcule la caja
+           envolvente con matrices de mundo ya actualizadas (recentrado erroneo) -->
+      <a-asset-item id="t-placa"      src="modelos/placa_base.glb"></a-asset-item>
+      <a-asset-item id="t-cpu"        src="modelos/cpu.glb"></a-asset-item>
+      <a-asset-item id="t-disipador"  src="modelos/disipador.glb"></a-asset-item>
+      <a-asset-item id="t-ram"        src="modelos/ram.glb"></a-asset-item>
+      <a-asset-item id="t-gpu"        src="modelos/gpu.glb"></a-asset-item>
+      <a-asset-item id="t-fuente"     src="modelos/fuente.glb"></a-asset-item>
+      <a-asset-item id="t-caja"       src="modelos/caja.glb"></a-asset-item>
+      <a-asset-item id="t-almacen"    src="modelos/almacenamiento.glb"></a-asset-item>
+      <a-asset-item id="t-nvme"       src="modelos/nvme.glb"></a-asset-item>
+      <a-asset-item id="t-ventilador" src="modelos/ventilador.glb"></a-asset-item>
+    </a-assets>
+
     <a-entity light="type: ambient; intensity: 0.9"></a-entity>
     <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
 
     <!-- Fila superior -->
-    <a-entity gltf-model="url(modelos/placa_base.glb)" ajustar data-nombre="placa_base" position="-4 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-placa" ajustar data-nombre="placa_base" position="-4 1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="Placa base" position="-4 0.2 -4" align="center" color="#FFF" width="4"></a-text>
-    <a-entity gltf-model="url(modelos/cpu.glb)" ajustar data-nombre="cpu" position="-2 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-cpu" ajustar data-nombre="cpu" position="-2 1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="CPU" position="-2 0.2 -4" align="center" color="#FFF" width="4"></a-text>
-    <a-entity gltf-model="url(modelos/disipador.glb)" ajustar data-nombre="disipador" position="0 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-disipador" ajustar data-nombre="disipador" position="0 1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="Disipador" position="0 0.2 -4" align="center" color="#FFF" width="4"></a-text>
-    <a-entity gltf-model="url(modelos/ram.glb)" ajustar data-nombre="ram" position="2 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-ram" ajustar data-nombre="ram" position="2 1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="RAM" position="2 0.2 -4" align="center" color="#FFF" width="4"></a-text>
-    <a-entity gltf-model="url(modelos/gpu.glb)" ajustar data-nombre="gpu" position="4 1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-gpu" ajustar data-nombre="gpu" position="4 1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="GPU" position="4 0.2 -4" align="center" color="#FFF" width="4"></a-text>
 
     <!-- Fila inferior -->
-    <a-entity gltf-model="url(modelos/fuente.glb)" ajustar data-nombre="fuente" position="-4 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-fuente" ajustar data-nombre="fuente" position="-4 -1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="Fuente" position="-4 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
-    <a-entity gltf-model="url(modelos/caja.glb)" ajustar data-nombre="caja" position="-2 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-caja" ajustar data-nombre="caja" position="-2 -1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="Caja" position="-2 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
-    <a-entity gltf-model="url(modelos/almacenamiento.glb)" ajustar data-nombre="almacenamiento" position="0 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-almacen" ajustar data-nombre="almacenamiento" position="0 -1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="SSD 2.5" position="0 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
-    <a-entity gltf-model="url(modelos/nvme.glb)" ajustar data-nombre="nvme" position="2 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-nvme" ajustar data-nombre="nvme" position="2 -1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="NVMe" position="2 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
-    <a-entity gltf-model="url(modelos/ventilador.glb)" ajustar data-nombre="ventilador" position="4 -1.2 -4" rotation="20 30 0"></a-entity>
+    <a-entity gltf-model="#t-ventilador" ajustar data-nombre="ventilador" position="4 -1.2 -4" rotation="20 30 0"></a-entity>
     <a-text value="Ventilador" position="4 -2.2 -4" align="center" color="#FFF" width="4"></a-text>
 
     <a-entity camera="fov: 60" position="0 0 1.5"></a-entity>

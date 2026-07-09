@@ -15,7 +15,7 @@ Ensamblaje-PC-3D).
 | `plantilla3.html` / `plantilla3-8cm.html` | Cubo 3: arquitectura del PC con diagramas animados |
 | `index.html` | Visor AR web (A-Frame + AR.js, marcadores barcode 3x3) |
 | `modelos/` | 10 modelos GLB de componentes de PC |
-| `marcadores/` | Marcadores barcode 0-9 (colección oficial AR.js) |
+| `marcadores/` | Marcadores barcode 0-11 (colección oficial AR.js) |
 | `qr-visor.png` | QR con la URL del visor publicado |
 | `cubo1-6cm.pdf` / `cubo2-6cm.pdf` | PDFs listos para imprimir (A4 vertical, 100%) |
 | `cubo1-8cm.pdf` / `cubo2-8cm.pdf` | PDFs listos para imprimir (A4 horizontal, 100%) |
@@ -62,10 +62,16 @@ La cámara del móvil exige **HTTPS**, así que hay que publicar la carpeta:
 
 Alternativa sin GitHub: `npx serve` + túnel (`cloudflared tunnel --url http://localhost:3000`).
 
+## Créditos y licencia de los modelos
+
+- `caja.glb` (semitorre ATX): modelo **original de este proyecto**, hecho en Blender.
+- El resto de modelos GLB proviene de la colección renderizada del proyecto
+  **Ensamblaje-PC-3D** del mismo autor (Angel Ortiz), preparada para uso educativo.
+
 ## Notas
 
 - Requiere internet (A-Frame y AR.js se cargan por CDN).
-- `cpu.glb` pesa 16 MB: en móviles lentos tarda en cargar la primera vez.
+- `cpu.glb` y `placa_base.glb` pesan 15-16 MB: en móviles lentos tardan en cargar la primera vez.
 - Imprimir mate mejor que brillante (los reflejos dificultan la detección).
-- Para más componentes (caja, NVMe, SSD, ventilador): añadir marcadores 6-11 y
-  duplicar bloques `<a-marker>` en `index.html` → segundo cubo.
+- `test-modelos.html`: página de prueba sin cámara que carga los 10 GLB en rejilla
+  (útil para validar los modelos sin AR).
