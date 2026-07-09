@@ -71,7 +71,7 @@ Alternativa sin GitHub: `npx serve` + túnel (`cloudflared tunnel --url http://l
 ## Notas
 
 - Requiere internet (A-Frame y AR.js se cargan por CDN).
-- `cpu.glb` y `placa_base.glb` pesan 15-16 MB: en móviles lentos tardan en cargar la primera vez.
+- Todos los modelos pesan 8,6 MB o menos (`nvme.glb` es el mayor): carga fluida en móvil.
 - Imprimir mate mejor que brillante (los reflejos dificultan la detección).
 - `test-modelos.html`: página de prueba sin cámara que carga los 10 GLB en rejilla
   (útil para validar los modelos sin AR).
