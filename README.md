@@ -72,14 +72,24 @@ Alternativa sin GitHub: `npx serve` + túnel (`cloudflared tunnel --url http://l
 
 ## Créditos y licencia de los modelos
 
+Ficha completa por pieza (origen, autor, licencia y trabajo aplicado) en
+**[CREDITOS.md](CREDITOS.md)**.
+
 - `caja.glb` (semitorre ATX): modelo **original de este proyecto**, hecho en Blender.
 - El resto de modelos GLB proviene de la colección renderizada del proyecto
   **Ensamblaje-PC-3D** del mismo autor (Angel Ortiz), preparada para uso educativo.
+  Su procedencia original está **pendiente de verificar**: ver la nota (1) de
+  `CREDITOS.md`.
+- No se ha incorporado ningún modelo descargado de terceros; la búsqueda de
+  alternativas CC0 en Poly Pizza queda documentada en `CREDITOS.md`.
 
 ## Notas
 
 - Requiere internet (A-Frame y AR.js se cargan por CDN).
-- Todos los modelos pesan 8,6 MB o menos (`nvme.glb` es el mayor): carga fluida en móvil.
+- Todos los modelos pesan 8,2 MB o menos (`nvme.glb` es el mayor): carga fluida en móvil.
+- La escena usa un **mapa de entorno generado por código** (`entorno-estudio` en
+  `index.html`) además de las luces: sin él, los materiales metálicos de three.js
+  se ven planos o negros en AR.
 - Imprimir mate mejor que brillante (los reflejos dificultan la detección).
 - `test-modelos.html`: página de prueba sin cámara que carga los 10 GLB de los cubos 1
   y 2 en rejilla (útil para validar los modelos sin AR).

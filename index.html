@@ -35,6 +35,78 @@
         });
       }
     });
+
+    // Entorno de estudio (IBL). Sin mapa de entorno los materiales metalicos
+    // de three.js salen planos o negros: es la causa habitual de que un GLB
+    // correcto parezca de cartulina en AR. Se genera por codigo con
+    // PMREMGenerator (no hace falta descargar ningun HDRI) y se aplica a toda
+    // la escena, asi que beneficia igual a los cubos 3 y 4.
+    AFRAME.registerComponent('entorno-estudio', {
+      init: function () {
+        const escena = this.el;
+        const crear = () => {
+          if (this.hecho || !escena.renderer) { return; }
+          this.hecho = true;
+          const pmrem = new THREE.PMREMGenerator(escena.renderer);
+          const sala = new THREE.Scene();
+          const cubo = new THREE.BoxGeometry();
+          // Caja envolvente clara: hace de luz ambiente del entorno
+          const envolvente = new THREE.Mesh(cubo, new THREE.MeshStandardMaterial({
+            color: 0xb8c0cc, emissive: new THREE.Color(0xb8c0cc),
+            emissiveIntensity: 0.17, roughness: 1, metalness: 0,
+            side: THREE.BackSide
+          }));
+          envolvente.scale.set(12, 7, 12);
+          sala.add(envolvente);
+          // Paneles emisivos: dan forma a los reflejos de los metales
+          const panel = function (color, fuerza, px, py, pz, sx, sy, sz) {
+            const m = new THREE.Mesh(cubo, new THREE.MeshStandardMaterial({
+              color: 0x000000, emissive: new THREE.Color(color),
+              emissiveIntensity: fuerza, roughness: 1, metalness: 0,
+              side: THREE.DoubleSide
+            }));
+            m.position.set(px, py, pz);
+            m.scale.set(sx, sy, sz);
+            sala.add(m);
+          };
+          panel(0xffffff, 1.8,  0.0,  3.1,  0.0, 7.0, 0.1, 7.0);  // cenital
+          panel(0xdce8ff, 0.9, -4.4,  0.6,  0.0, 0.1, 4.0, 7.0);  // relleno frio
+          panel(0xffe8cc, 0.7,  4.4,  0.4,  0.0, 0.1, 4.0, 7.0);  // relleno calido
+          panel(0xffffff, 0.6,  0.0,  0.5, -4.4, 7.0, 4.0, 0.1);  // fondo
+          escena.object3D.environment = pmrem.fromScene(sala, 0.03).texture;
+          pmrem.dispose();
+        };
+        if (escena.renderStarted) { crear(); }
+        else { escena.addEventListener('renderstart', crear); }
+      }
+    });
+
+    // Sombra de apoyo bajo cada modelo. Se engancha al evento 'model-loaded',
+    // que burbujea hasta la escena, asi que no hay que tocar ni un marcador.
+    AFRAME.registerComponent('sombras-auto', {
+      schema: { tam: { default: 2.4 }, opacidad: { default: 0.32 } },
+      init: function () {
+        this.el.addEventListener('model-loaded', (ev) => {
+          const entidad = ev.target;
+          const malla = entidad.getObject3D('mesh');
+          if (!malla) { return; }
+          malla.traverse(function (nodo) {
+            if (nodo.isMesh) { nodo.castShadow = true; nodo.receiveShadow = true; }
+          });
+          const marcador = entidad.parentEl;
+          if (!marcador || marcador.dataset.sombraPuesta) { return; }
+          marcador.dataset.sombraPuesta = '1';
+          const suelo = new THREE.Mesh(
+            new THREE.PlaneGeometry(this.data.tam, this.data.tam),
+            new THREE.ShadowMaterial({ opacity: this.data.opacidad })
+          );
+          suelo.rotation.x = -Math.PI / 2;
+          suelo.position.y = 0.002;
+          suelo.receiveShadow = true;
+          marcador.object3D.add(suelo);
+        });
+      }
+    });
   </script>
 </head>
 <body style="margin:0; overflow:hidden">
@@ -43,6 +115,9 @@
   <a-scene embedded
            arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;"
            renderer="colorManagement: true;"
+           shadow="type: pcfsoft; autoUpdate: true"
+           entorno-estudio
+           sombras-auto
            vr-mode-ui="enabled: false">
 
     <a-assets timeout="30000">
@@ -61,8 +136,20 @@
       <a-asset-item id="m-panelio"   src="modelos/panel_io.glb"></a-asset-item>
     </a-assets>
 
-    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
-    <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
+    <!-- Iluminacion de estudio: ambiente suave + hemisferica + luz clave con
+         sombra + relleno frio. El grueso del modelado de luz lo pone el mapa
+         de entorno del componente 'entorno-estudio'. -->
+    <a-entity light="type: ambient; color: #ffffff; intensity: 0.18"></a-entity>
+    <a-entity light="type: hemisphere; color: #dfe8f7; groundColor: #4a443c; intensity: 0.32"></a-entity>
+    <a-entity id="luz-clave"
+              light="type: directional; color: #fff4e6; intensity: 0.85;
+                     castShadow: true; shadowMapWidth: 1024; shadowMapHeight: 1024;
+                     shadowCameraLeft: -2; shadowCameraRight: 2;
+                     shadowCameraTop: 2; shadowCameraBottom: -2;
+                     shadowCameraNear: 0.1; shadowCameraFar: 12;
+                     shadowBias: -0.0012; shadowRadius: 3"
+              position="1.6 3.2 1.8"></a-entity>
+    <a-entity light="type: directional; color: #cfe0ff; intensity: 0.22" position="-2.2 1.4 -1.6"></a-entity>
 
     <a-marker type="barcode" value="0">
       <a-entity gltf-model="#m-placa" ajustar></a-entity>
