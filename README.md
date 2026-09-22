@@ -13,13 +13,15 @@ Ensamblaje-PC-3D).
 | `plantilla-8cm.html` | Cubo 1 con caras de 8 cm, en 2 páginas A4 apaisadas (para webcams de portátil) |
 | `plantilla2-8cm.html` | Cubo 2 con caras de 8 cm, en 2 páginas A4 apaisadas |
 | `plantilla3.html` / `plantilla3-8cm.html` | Cubo 3: arquitectura del PC con diagramas animados |
+| `plantilla4.html` / `plantilla4-8cm.html` | Cubo 4: conectividad y expansión (incluye QR y cara de título) |
 | `index.html` | Visor AR web (A-Frame + AR.js, marcadores barcode 3x3) |
-| `modelos/` | 10 modelos GLB de componentes de PC |
-| `marcadores/` | Marcadores barcode 0-11 (colección oficial AR.js) |
+| `modelos/` | 13 modelos GLB de componentes de PC |
+| `marcadores/` | Marcadores barcode 0-15 (colección oficial AR.js) |
 | `qr-visor.png` | QR con la URL del visor publicado |
 | `cubo1-6cm.pdf` / `cubo2-6cm.pdf` | PDFs listos para imprimir (A4 vertical, 100%) |
 | `cubo1-8cm.pdf` / `cubo2-8cm.pdf` | PDFs listos para imprimir (A4 horizontal, 100%) |
 | `cubo3-6cm.pdf` / `cubo3-8cm.pdf` | PDFs del cubo 3 |
+| `cubo4-6cm.pdf` / `cubo4-8cm.pdf` | PDFs del cubo 4 |
 
 ## Caras de los cubos
 
@@ -37,15 +39,21 @@ Ensamblaje-PC-3D).
 | 9 | Ventilador de caja | 2 |
 | 10 | Arquitectura clásica: puentes norte/sur (diagrama animado) | 3 |
 | 11 | SoC moderno: CPU + GPU + NPU (diagrama animado) | 3 |
+| 12 | Tarjeta de red (NIC) | 4 |
+| 13 | Tarjeta de sonido | 4 |
+| 14 | Panel de E/S trasero | 4 |
+| 15 | Puertos y velocidades (diagrama animado) | 4 |
 
 El cubo 2 usa las 2 caras libres para el QR del visor y el título.
 El cubo 3 lleva QR, título y 2 caras de teoría impresa; sus marcadores muestran
 diagramas 3D animados (partículas recorriendo los buses) en vez de modelos GLB.
+El cubo 4 (conectividad y expansión) usa 3 caras con modelos GLB, una cara con el
+diagrama animado de puertos y anchos de banda, y las 2 restantes para QR y título.
 
 ## Probar en el portátil (webcam)
 
 ```powershell
-cd $env:USERPROFILE\Desktop\Cubo-AR-PC
+cd D:\Cubo-AR-PC
 python -m http.server 8080
 ```
 
@@ -73,5 +81,5 @@ Alternativa sin GitHub: `npx serve` + túnel (`cloudflared tunnel --url http://l
 - Requiere internet (A-Frame y AR.js se cargan por CDN).
 - Todos los modelos pesan 8,6 MB o menos (`nvme.glb` es el mayor): carga fluida en móvil.
 - Imprimir mate mejor que brillante (los reflejos dificultan la detección).
-- `test-modelos.html`: página de prueba sin cámara que carga los 10 GLB en rejilla
-  (útil para validar los modelos sin AR).
+- `test-modelos.html`: página de prueba sin cámara que carga los 10 GLB de los cubos 1
+  y 2 en rejilla (útil para validar los modelos sin AR).

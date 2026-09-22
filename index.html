@@ -56,6 +56,9 @@
       <a-asset-item id="m-almacen"   src="modelos/almacenamiento.glb"></a-asset-item>
       <a-asset-item id="m-nvme"      src="modelos/nvme.glb"></a-asset-item>
       <a-asset-item id="m-ventilador" src="modelos/ventilador.glb"></a-asset-item>
+      <a-asset-item id="m-red"       src="modelos/tarjeta_red.glb"></a-asset-item>
+      <a-asset-item id="m-sonido"    src="modelos/tarjeta_sonido.glb"></a-asset-item>
+      <a-asset-item id="m-panelio"   src="modelos/panel_io.glb"></a-asset-item>
     </a-assets>
 
     <a-entity light="type: ambient; intensity: 0.9"></a-entity>
@@ -115,7 +118,7 @@
     <a-marker type="barcode" value="10">
       <a-entity rotation="-90 0 0" position="0 0.1 0" scale="0.8 0.8 0.8">
         <a-plane position="0 1.67 0.02" width="3.0" height="0.5" material="color: #000; opacity: 0.75; transparent: true"></a-plane>
-        <a-text value="ARQUITECTURA CLÁSICA" position="0 1.78 0.05" align="center" color="#FFD700" width="5.5"></a-text>
+        <a-text value="ARQUITECTURA CLASICA" position="0 1.78 0.05" align="center" color="#FFD700" width="5.5"></a-text>
         <a-text value="PC de sobremesa hasta ~2010" position="0 1.56 0.05" align="center" color="#FFF" width="3"></a-text>
 
         <!-- CPU -->
@@ -306,6 +309,127 @@
                 position="0 -1.0 0.05" align="center" color="#145a32" width="3.2"></a-text>
         <a-text value="Esferas de color = datos moviendose a la velocidad de cada bus"
                 position="0 -1.25 0.05" align="center" color="#111" width="3"></a-text>
+      </a-entity>
+    </a-marker>
+
+    <!-- Cubo 4: conectividad y expansion -->
+    <a-marker type="barcode" value="12">
+      <a-entity gltf-model="#m-red" ajustar></a-entity>
+      <a-text value="Tarjeta de red (NIC)" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="13">
+      <a-entity gltf-model="#m-sonido" ajustar></a-entity>
+      <a-text value="Tarjeta de sonido" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <a-marker type="barcode" value="14">
+      <a-entity gltf-model="#m-panelio" ajustar></a-entity>
+      <a-text value="Panel de E-S trasero" position="0 1.5 0" align="center" color="#FFF" width="4"></a-text>
+    </a-marker>
+
+    <!-- Cubo 4: puertos y velocidades -->
+    <a-marker type="barcode" value="15">
+      <a-entity rotation="-90 0 0" position="0 0.1 0" scale="0.8 0.8 0.8">
+        <a-plane position="0 1.67 0.02" width="3.2" height="0.5" material="color: #000; opacity: 0.75; transparent: true"></a-plane>
+        <a-text value="PUERTOS Y VELOCIDADES" position="0 1.78 0.05" align="center" color="#FFD700" width="5.2"></a-text>
+        <a-text value="Cuantos datos cabe mover por cada conector" position="0 1.56 0.05" align="center" color="#FFF" width="3"></a-text>
+
+        <!-- USB 2.0 -->
+        <a-box position="-1.62 1.12 0.05" depth="0.09" height="0.29" width="1.24" color="#7f8c8d">
+          <a-text value="USB 2.0" position="0 0.045 0.06" align="center" color="#FFF" width="2.2"></a-text>
+          <a-text value="raton, teclado" position="0 -0.08 0.06" align="center" color="#ecf0f1" width="1.45"></a-text>
+        </a-box>
+        <a-box position="0.375 1.12 0.04" depth="0.02" height="0.14" width="2.45" color="#d6dbdf"></a-box>
+        <a-box position="-0.65 1.12 0.06" depth="0.03" height="0.14" width="0.4" color="#95a5a6"></a-box>
+        <a-text value="480 Mb/s" position="1.67 1.12 0.06" align="left" color="#111" width="1.55"></a-text>
+        <a-sphere radius="0.042" color="#95a5a6" position="-0.79 1.12 0.14"
+          animation="property: position; from: -0.79 1.12 0.14; to: -0.51 1.12 0.14; dur: 2200; loop: true; easing: linear; delay: 0"></a-sphere>
+        <a-sphere radius="0.042" color="#95a5a6" position="-0.79 1.12 0.14"
+          animation="property: position; from: -0.79 1.12 0.14; to: -0.51 1.12 0.14; dur: 2200; loop: true; easing: linear; delay: 1100"></a-sphere>
+
+        <!-- ETHERNET -->
+        <a-box position="-1.62 0.775 0.05" depth="0.09" height="0.29" width="1.24" color="#2c3e50">
+          <a-text value="ETHERNET" position="0 0.045 0.06" align="center" color="#FFF" width="2.2"></a-text>
+          <a-text value="red RJ-45" position="0 -0.08 0.06" align="center" color="#ecf0f1" width="1.45"></a-text>
+        </a-box>
+        <a-box position="0.375 0.775 0.04" depth="0.02" height="0.14" width="2.45" color="#d6dbdf"></a-box>
+        <a-box position="-0.575 0.775 0.06" depth="0.03" height="0.14" width="0.55" color="#5d6d7e"></a-box>
+        <a-text value="1 Gb/s" position="1.67 0.775 0.06" align="left" color="#111" width="1.55"></a-text>
+        <a-sphere radius="0.042" color="#5d6d7e" position="-0.79 0.775 0.14"
+          animation="property: position; from: -0.79 0.775 0.14; to: -0.36 0.775 0.14; dur: 1700; loop: true; easing: linear; delay: 0"></a-sphere>
+        <a-sphere radius="0.042" color="#5d6d7e" position="-0.79 0.775 0.14"
+          animation="property: position; from: -0.79 0.775 0.14; to: -0.36 0.775 0.14; dur: 1700; loop: true; easing: linear; delay: 850"></a-sphere>
+
+        <!-- USB 3.2 Gen1 -->
+        <a-box position="-1.62 0.43 0.05" depth="0.09" height="0.29" width="1.24" color="#2980b9">
+          <a-text value="USB 3.2 Gen1" position="0 0.045 0.06" align="center" color="#FFF" width="2.2"></a-text>
+          <a-text value="pendrive, disco" position="0 -0.08 0.06" align="center" color="#ecf0f1" width="1.45"></a-text>
+        </a-box>
+        <a-box position="0.375 0.43 0.04" depth="0.02" height="0.14" width="2.45" color="#d6dbdf"></a-box>
+        <a-box position="-0.375 0.43 0.06" depth="0.03" height="0.14" width="0.95" color="#5dade2"></a-box>
+        <a-text value="5 Gb/s" position="1.67 0.43 0.06" align="left" color="#111" width="1.55"></a-text>
+        <a-sphere radius="0.042" color="#5dade2" position="-0.79 0.43 0.14"
+          animation="property: position; from: -0.79 0.43 0.14; to: 0.04 0.43 0.14; dur: 1000; loop: true; easing: linear; delay: 0"></a-sphere>
+        <a-sphere radius="0.042" color="#5dade2" position="-0.79 0.43 0.14"
+          animation="property: position; from: -0.79 0.43 0.14; to: 0.04 0.43 0.14; dur: 1000; loop: true; easing: linear; delay: 500"></a-sphere>
+
+        <!-- SATA III -->
+        <a-box position="-1.62 0.085 0.05" depth="0.09" height="0.29" width="1.24" color="#16a085">
+          <a-text value="SATA III" position="0 0.045 0.06" align="center" color="#FFF" width="2.2"></a-text>
+          <a-text value="SSD y HDD de 2,5" position="0 -0.08 0.06" align="center" color="#ecf0f1" width="1.45"></a-text>
+        </a-box>
+        <a-box position="0.375 0.085 0.04" depth="0.02" height="0.14" width="2.45" color="#d6dbdf"></a-box>
+        <a-box position="-0.325 0.085 0.06" depth="0.03" height="0.14" width="1.05" color="#48c9b0"></a-box>
+        <a-text value="6 Gb/s" position="1.67 0.085 0.06" align="left" color="#111" width="1.55"></a-text>
+        <a-sphere radius="0.042" color="#48c9b0" position="-0.79 0.085 0.14"
+          animation="property: position; from: -0.79 0.085 0.14; to: 0.14 0.085 0.14; dur: 950; loop: true; easing: linear; delay: 0"></a-sphere>
+        <a-sphere radius="0.042" color="#48c9b0" position="-0.79 0.085 0.14"
+          animation="property: position; from: -0.79 0.085 0.14; to: 0.14 0.085 0.14; dur: 950; loop: true; easing: linear; delay: 475"></a-sphere>
+
+        <!-- HDMI 2.1 -->
+        <a-box position="-1.62 -0.26 0.05" depth="0.09" height="0.29" width="1.24" color="#8e44ad">
+          <a-text value="HDMI 2.1" position="0 0.045 0.06" align="center" color="#FFF" width="2.2"></a-text>
+          <a-text value="video 4K y 8K" position="0 -0.08 0.06" align="center" color="#ecf0f1" width="1.45"></a-text>
+        </a-box>
+        <a-box position="0.375 -0.26 0.04" depth="0.02" height="0.14" width="2.45" color="#d6dbdf"></a-box>
+        <a-box position="0.125 -0.26 0.06" depth="0.03" height="0.14" width="1.95" color="#bb8fce"></a-box>
+        <a-text value="48 Gb/s" position="1.67 -0.26 0.06" align="left" color="#111" width="1.55"></a-text>
+        <a-sphere radius="0.042" color="#bb8fce" position="-0.79 -0.26 0.14"
+          animation="property: position; from: -0.79 -0.26 0.14; to: 1.04 -0.26 0.14; dur: 600; loop: true; easing: linear; delay: 0"></a-sphere>
+        <a-sphere radius="0.042" color="#bb8fce" position="-0.79 -0.26 0.14"
+          animation="property: position; from: -0.79 -0.26 0.14; to: 1.04 -0.26 0.14; dur: 600; loop: true; easing: linear; delay: 300"></a-sphere>
+
+        <!-- USB4 / TB4 -->
+        <a-box position="-1.62 -0.605 0.05" depth="0.09" height="0.29" width="1.24" color="#d35400">
+          <a-text value="USB4 / TB4" position="0 0.045 0.06" align="center" color="#FFF" width="2.2"></a-text>
+          <a-text value="USB-C todo en uno" position="0 -0.08 0.06" align="center" color="#ecf0f1" width="1.45"></a-text>
+        </a-box>
+        <a-box position="0.375 -0.605 0.04" depth="0.02" height="0.14" width="2.45" color="#d6dbdf"></a-box>
+        <a-box position="0.075 -0.605 0.06" depth="0.03" height="0.14" width="1.85" color="#e59866"></a-box>
+        <a-text value="40 Gb/s" position="1.67 -0.605 0.06" align="left" color="#111" width="1.55"></a-text>
+        <a-sphere radius="0.042" color="#e59866" position="-0.79 -0.605 0.14"
+          animation="property: position; from: -0.79 -0.605 0.14; to: 0.94 -0.605 0.14; dur: 620; loop: true; easing: linear; delay: 0"></a-sphere>
+        <a-sphere radius="0.042" color="#e59866" position="-0.79 -0.605 0.14"
+          animation="property: position; from: -0.79 -0.605 0.14; to: 0.94 -0.605 0.14; dur: 620; loop: true; easing: linear; delay: 310"></a-sphere>
+
+        <!-- PCIe 4.0 x16 -->
+        <a-box position="-1.62 -0.95 0.05" depth="0.09" height="0.29" width="1.24" color="#c0392b">
+          <a-text value="PCIe 4.0 x16" position="0 0.045 0.06" align="center" color="#FFF" width="2.2"></a-text>
+          <a-text value="interno: la GPU" position="0 -0.08 0.06" align="center" color="#ecf0f1" width="1.45"></a-text>
+        </a-box>
+        <a-box position="0.375 -0.95 0.04" depth="0.02" height="0.14" width="2.45" color="#d6dbdf"></a-box>
+        <a-box position="0.35 -0.95 0.06" depth="0.03" height="0.14" width="2.4" color="#e6786b"></a-box>
+        <a-text value="256 Gb/s" position="1.67 -0.95 0.06" align="left" color="#111" width="1.55"></a-text>
+        <a-sphere radius="0.042" color="#e6786b" position="-0.79 -0.95 0.14"
+          animation="property: position; from: -0.79 -0.95 0.14; to: 1.49 -0.95 0.14; dur: 380; loop: true; easing: linear; delay: 0"></a-sphere>
+        <a-sphere radius="0.042" color="#e6786b" position="-0.79 -0.95 0.14"
+          animation="property: position; from: -0.79 -0.95 0.14; to: 1.49 -0.95 0.14; dur: 380; loop: true; easing: linear; delay: 190"></a-sphere>
+
+        <a-text value="Barra mas larga = mas ancho de banda; las esferas van a su ritmo"
+                position="0 -1.32 0.05" align="center" color="#111" width="3.3"></a-text>
+        <a-text value="Gb/s = gigabits por segundo. 8 bits = 1 byte"
+                position="0 -1.55 0.05" align="center" color="#145a32" width="3"></a-text>
       </a-entity>
     </a-marker>
 
